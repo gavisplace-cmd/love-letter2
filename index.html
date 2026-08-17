@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💗 A Love Letter For You</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #0a1a3f 0%, #1e3a8a 40%, #3b82f6 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Floating hearts background */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        /* ===== Blue Tulips ===== */
+        .tulip {
+            position: absolute;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Tulip flower head */
+        .tulip-flower {
+            position: relative;
+            width: 0;
+            height: 0;
+        }
+
+        .tulip-flower::before,
+        .tulip-flower::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 34px;
+            border-radius: 50% 50% 45% 45%;
+            top: 0;
+        }
+
+        .tulip-flower::before {
+            left: -22px;
+            background: linear-gradient(135deg, #60a5fa, #2563eb);
+            transform: rotate(-25deg);
+            border-radius: 50% 0 50% 50%;
+        }
+
+        .tulip-flower::after {
+            left: 0;
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            transform: rotate(25deg);
+            border-radius: 0 50% 50% 50%;
+        }
+
+        /* Tulip center petal */
+        .tulip-center {
+            position: absolute;
+            width: 18px;
+            height: 30px;
+            background: linear-gradient(180deg, #93c5fd, #3b82f6);
+            border-radius: 50% 50% 40% 40%;
+            top: 2px;
+            left: -9px;
+            z-index: 2;
+        }
+
+        /* Tulip stem */
+        .tulip-stem {
+            position: absolute;
+            width: 3px;
+            height: 70px;
+            background: linear-gradient(180deg, #1d4ed8, #1e3a8a);
+            border-radius: 3px;
+            top: 32px;
+            left: -1.5px;
+        }
+
+        /* Tulip leaf */
+        .tulip-leaf {
+            position: absolute;
+            width: 30px;
+            height: 16px;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            border-radius: 0 100% 0 100%;
+            top: 55px;
+            left: -20px;
+            transform: rotate(-20deg);
+        }
+
+        .tulip-leaf.right {
+            left: 5px;
+            transform: rotate(160deg) scaleX(-1);
+            top: 65px;
+        }
+
+        /* Tulip positions - bottom corners of letter */
+        .tulip-left {
+            bottom: -35px;
+            left: -55px;
+            transform: scale(1.5);
+        }
+
+        .tulip-right {
+            bottom: -35px;
+            right: -55px;
+            transform: scale(1.5) scaleX(-1);
+        }
+
+        /* Tulips on the sides of the letter */
+        .tulip-side-left {
+            top: 50%;
+            left: -70px;
+            transform: scale(1.2) rotate(-15deg);
+        }
+
+        .tulip-side-right {
+            top: 50%;
+            right: -70px;
+            transform: scale(1.2) rotate(15deg) scaleX(-1);
+        }
+
+        /* Tulip bouquet at bottom center */
+        .tulip-bouquet {
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%) scale(1.3);
+        }
+
+        .tulip-bouquet .tulip:nth-child(1) {
+            left: -25px;
+            transform: rotate(-20deg);
+        }
+
+        .tulip-bouquet .tulip:nth-child(2) {
+            left: 0;
+            transform: rotate(0deg);
+        }
+
+        .tulip-bouquet .tulip:nth-child(3) {
+            left: 25px;
+            transform: rotate(20deg);
+        }
+
+        /* Small tulips in background */
+        .tulip-bg {
+            position: fixed;
+            z-index: 0;
+            opacity: 0.55;
+            pointer-events: none;
+        }
+
+        .tulip-bg-1 {
+            bottom: 30px;
+            left: 5%;
+            transform: scale(0.9);
+        }
+
+        .tulip-bg-2 {
+            bottom: 60px;
+            right: 8%;
+            transform: scale(0.8) scaleX(-1);
+        }
+
+        .tulip-bg-3 {
+            top: 40px;
+            left: 10%;
+            transform: scale(0.7) rotate(15deg);
+        }
+
+        .tulip-bg-4 {
+            top: 80px;
+            right: 12%;
+            transform: scale(0.75) rotate(-10deg) scaleX(-1);
+        }
+
+        .tulip-bg-5 {
+            top: 50%;
+            left: 3%;
+            transform: scale(0.65) rotate(20deg);
+        }
+
+        .tulip-bg-6 {
+            top: 55%;
+            right: 4%;
+            transform: scale(0.7) rotate(-15deg) scaleX(-1);
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -50px;
+            font-size: 24px;
+            opacity: 0.15;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.15;
+            }
+            50% {
+                opacity: 0.35;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Letter container */
+        .letter-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 700px;
+            background: linear-gradient(145deg, #f0f7ff 0%, #ffffff 50%, #e8f1ff 100%);
+            border-radius: 20px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 0 3px rgba(59, 130, 246, 0.3),
+                0 0 80px rgba(59, 130, 246, 0.25);
+            padding: 60px 55px;
+            position: relative;
+            border: 1px solid rgba(147, 197, 253, 0.6);
+        }
+
+        /* Decorative top border */
+        .letter-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6, #60a5fa, #3b82f6, #1e3a8a);
+            border-radius: 20px 20px 0 0;
+        }
+
+        /* Wax seal */
+        .seal {
+            position: absolute;
+            top: -28px;
+            right: 45px;
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle at 35% 35%, #60a5fa, #2563eb 60%, #1e40af);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow:
+                0 6px 15px rgba(30, 64, 175, 0.5),
+                inset 0 2px 4px rgba(255, 255, 255, 0.4);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .seal span {
+            font-size: 30px;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Header */
+        .letter-header {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px dashed rgba(59, 130, 246, 0.3);
+        }
+
+        .letter-header h1 {
+            font-size: 2.4rem;
+            color: #1e3a8a;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(59, 130, 246, 0.15);
+        }
+
+        .letter-header .subtitle {
+            color: #3b82f6;
+            font-style: italic;
+            font-size: 1.05rem;
+            letter-spacing: 1px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+            color: #3b82f6;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #93c5fd, transparent);
+        }
+
+        /* Letter body */
+        .letter-body {
+            color: #1e3a5f;
+            font-size: 1.1rem;
+            line-height: 1.9;
+        }
+
+        .letter-body p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .letter-body .greeting {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .letter-body .closing {
+            margin-top: 35px;
+            text-align: right;
+            font-style: italic;
+            color: #2563eb;
+        }
+
+        .letter-body .signature {
+            text-align: right;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-top: 5px;
+            font-family: 'Brush Script MT', cursive, 'Georgia', serif;
+        }
+
+        /* Highlighted words */
+        .highlight {
+            color: #ec4899;
+            font-weight: bold;
+        }
+
+        /* Heart divider */
+        .heart-divider {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 1.3rem;
+            color: #3b82f6;
+            letter-spacing: 10px;
+        }
+
+        /* Footer */
+        .letter-footer {
+            text-align: center;
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 2px dashed rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .letter-container {
+                padding: 40px 25px;
+            }
+
+            .letter-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .letter-header .subtitle {
+                font-size: 0.9rem;
+            }
+
+            .letter-body {
+                font-size: 1rem;
+                line-height: 1.7;
+            }
+
+            .heart-divider {
+                letter-spacing: 6px;
+                font-size: 1.1rem;
+            }
+
+            .highlight {
+                color: #ec4899;
+            }
+
+            .letter-body .greeting {
+                font-size: 1.2rem;
+            }
+
+            .letter-body .closing {
+                font-size: 0.95rem;
+            }
+
+            .letter-body .signature {
+                font-size: 1.3rem;
+            }
+
+            .seal {
+                width: 55px;
+                height: 55px;
+                right: 25px;
+                top: -22px;
+            }
+
+            .seal span {
+                font-size: 24px;
+            }
+
+            /* Scale down corner tulips on mobile */
+            .tulip-left {
+                left: -20px;
+                transform: scale(0.8);
+            }
+
+            .tulip-right {
+                right: -20px;
+                transform: scale(0.8) scaleX(-1);
+            }
+
+            /* Hide side tulips on mobile */
+            .tulip-side-left,
+            .tulip-side-right {
+                display: none;
+            }
+
+            /* Scale down bouquet on mobile */
+            .tulip-bouquet {
+                transform: translateX(-50%) scale(0.9);
+            }
+
+            /* Hide background tulips on very small screens */
+            .tulip-bg-3,
+            .tulip-bg-4,
+            .tulip-bg-5,
+            .tulip-bg-6 {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating hearts background -->
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <!-- Background tulips -->
+    <div class="tulip tulip-bg tulip-bg-1">
+        <div class="tulip-flower"><div class="tulip-center"></div></div>
+        <div class="tulip-stem"></div>
+        <div class="tulip-leaf"></div>
+        <div class="tulip-leaf right"></div>
+    </div>
+
+    <div class="tulip tulip-bg tulip-bg-2">
+        <div class="tulip-flower"><div class="tulip-center"></div></div>
+        <div class="tulip-stem"></div>
+        <div class="tulip-leaf"></div>
+        <div class="tulip-leaf right"></div>
+    </div>
+
+    <div class="tulip tulip-bg tulip-bg-3">
+        <div class="tulip-flower"><div class="tulip-center"></div></div>
+        <div class="tulip-stem"></div>
+        <div class="tulip-leaf"></div>
+        <div class="tulip-leaf right"></div>
+    </div>
+
+    <div class="tulip tulip-bg tulip-bg-4">
+        <div class="tulip-flower"><div class="tulip-center"></div></div>
+        <div class="tulip-stem"></div>
+        <div class="tulip-leaf"></div>
+        <div class="tulip-leaf right"></div>
+    </div>
+
+    <div class="tulip tulip-bg tulip-bg-5">
+        <div class="tulip-flower"><div class="tulip-center"></div></div>
+        <div class="tulip-stem"></div>
+        <div class="tulip-leaf"></div>
+        <div class="tulip-leaf right"></div>
+    </div>
+
+    <div class="tulip tulip-bg tulip-bg-6">
+        <div class="tulip-flower"><div class="tulip-center"></div></div>
+        <div class="tulip-stem"></div>
+        <div class="tulip-leaf"></div>
+        <div class="tulip-leaf right"></div>
+    </div>
+
+    <!-- Letter -->
+    <div class="letter-container">
+
+        <!-- Corner tulips -->
+        <div class="tulip tulip-left">
+            <div class="tulip-flower"><div class="tulip-center"></div></div>
+            <div class="tulip-stem"></div>
+            <div class="tulip-leaf"></div>
+            <div class="tulip-leaf right"></div>
+        </div>
+
+        <div class="tulip tulip-right">
+            <div class="tulip-flower"><div class="tulip-center"></div></div>
+            <div class="tulip-stem"></div>
+            <div class="tulip-leaf"></div>
+            <div class="tulip-leaf right"></div>
+        </div>
+
+        <!-- Side tulips -->
+        <div class="tulip tulip-side-left">
+            <div class="tulip-flower"><div class="tulip-center"></div></div>
+            <div class="tulip-stem"></div>
+            <div class="tulip-leaf"></div>
+            <div class="tulip-leaf right"></div>
+        </div>
+
+        <div class="tulip tulip-side-right">
+            <div class="tulip-flower"><div class="tulip-center"></div></div>
+            <div class="tulip-stem"></div>
+            <div class="tulip-leaf"></div>
+            <div class="tulip-leaf right"></div>
+        </div>
+
+        <!-- Tulip bouquet at bottom center -->
+        <div class="tulip-bouquet">
+            <div class="tulip">
+                <div class="tulip-flower"><div class="tulip-center"></div></div>
+                <div class="tulip-stem"></div>
+                <div class="tulip-leaf"></div>
+                <div class="tulip-leaf right"></div>
+            </div>
+            <div class="tulip">
+                <div class="tulip-flower"><div class="tulip-center"></div></div>
+                <div class="tulip-stem"></div>
+                <div class="tulip-leaf"></div>
+                <div class="tulip-leaf right"></div>
+            </div>
+            <div class="tulip">
+                <div class="tulip-flower"><div class="tulip-center"></div></div>
+                <div class="tulip-stem"></div>
+                <div class="tulip-leaf"></div>
+                <div class="tulip-leaf right"></div>
+            </div>
+        </div>
+
+        <!-- Wax seal -->
+        <div class="seal">
+            <span>💗</span>
+        </div>
+
+        <!-- Header -->
+        <div class="letter-header">
+            <h1>For My Chay</h1>
+            <div class="subtitle">✦ A Small Act of Me While ur Asleep ✦</div>
+        </div>
+
+        <!-- Letter body -->
+        <div class="letter-body">
+            <p class="greeting">To The One I'll Always Choose,</p>
+
+            <p>
+                Haii Chay!!! Good Morning, Afternoon, Evening po!!! (I don't know when you're reading this so I'll greet you in every hour^^), I know I keep coding this things po but I just can't wait to give you my hand written letters po. I made one of these again because I just want to^^ I know these takes a lot of time to make hehe but it's super worth it seeing your reaction po since that reaction makes me satisfied even if you don't have to say anything na po, I have this feeling of loving you more every time I put efforts into you 💗 yes I said that loving you more and I know it's too soon po but I just want to express my feelings for you because I know that's what you want din po (that I express my feelings for you through words with actions, don't worry I'm not just all words^^).
+            </p>
+
+            <p>
+                Firstly po, I just wanna say sorry <span class="highlight">since nakita po ni tita yung photobooth</span> and I didn't get to be with you while you were explaining to tita and ate Kai po. I'm sorry if I fell asleep and didn't get to talk to you po and ask "how are you?" because that's the most important thing for me po, how are you feeling so I know how I'll act around you to not worsen your feelings and to help you po because I'm not just here as a statue but I want to be a person who'll be significant in your life po. I hope you were <span class="highlight">Oki</span> while I'm gone, if not po I'm sorry if I wasn't there but I would gladly listen po to what happened when we get to talk to each other^^ I'll always listen to your rants, complaints, feelings, and most of all I'll always listen to your randomness^^ if you're getting uncomfortable po you can tell me Oki? I'm willing to make adjustments for you po!!^^
+            </p>
+
+            <p>
+                Secondly po, I just want to reassure you po because I saw your reposts on tiktok hehe 😅. I saw there po that you're always the girl not worth fighting for? Well you're wrong po!! If the world is against you then I would gladly be an <span class="highlight">enemy of the world</span>, because I'll always be here for you po through your ups and downs^^ I'll always be present before, during, after. I will tell you how <span class="highlight">proud I am of you</span> because of the challenges you faced alone and with your family/friends po, but you don't need to worry about being alone na po because now you have me!!! I know it'll be a big change for you that someone is here 😅 as you said po before that you were not open to anyone and always feel alone when you have to face something, but now po you may feel like you're alone but I'm always behind you ready to support you and hug you through anything omki? These challenges are lessons for you to grow into a person God planned for "James 1:2-4" My goal for us is having a good relationship with each other and with God po^^ I want you to know that if everything gets too heavy were both there for you always!!^^ let's lay our problems to him because he always knows how to give you strength and focus to overcome them!! And say all of your feelings to me or cry on me I'll understand that everything is hard and you just need someone there^^ Wishing us the best^^
+            </p>
+
+            <p>
+                Thirdly po, I saw some of your repost is about my past relationship po. I just want to tell you that <span class="highlight">NO po I'm not using you to get over her</span> and NO po I don't have feelings for her or for anyone other than you po!!^^ I know that I just got out of a relationship but that doesn't me I'll use you to get over her, or I still have lingering feelings for her po^^ I know that type of doubt I promise you and I also know it's a hard feeling to overcome, but I'll make sure that I will put your mind at rest soon po by making you feel how much I truly love you as a person, as an individual, and as a person whom I truly love. I hope my hugs right now are enough to make you feel safe even if we're both in a dangerous situation because I always have you and will never get scared protecting you^^ I don't want you to give me your acceptance, I'm not ready yet not relationship wise but <span class="highlight">ayoko mag mahal ng tipid</span> (iykyk) Yes I wanna be financially stable because I know it's hard to love someone where you have to save up for a long time just to show your effort to them po!!^^
+            </p>
+
+            <p>
+                Lastly po, I'm willing to meet sila Tita and Tito and talk to them po^^ as long as it's your decision and hindi ka po pilit Oki? Ill gladly answer their questions pure heartedly. I hope we grow more for each other because there is always room for growth when you truly love a person, I will show you my effort soon I'm just really busy po but I'll always make time for you <span class="highlight">My Chay 💗💗💗</span>, Always ingat ka po ha and take care of yourself (of course I will take care of you but you need to sunod what I tell you because I'm doing it for you po💗) I'm sooo happy for you Chay!!! And always will be proud of you po!!!
+            </p>
+
+            <div class="heart-divider">💗 💗 💗</div>
+
+            <p class="closing">
+                With all my love,<br>
+                <span class="signature">Always your, Gavio/Gav 💗</span>
+            </p>
+         </div>
+
+         <!-- Footer -->
+        <div class="letter-footer">
+            ✦ From All The 8 Parts of My Heart ✦
+        </div>
+    </div>
+
+    <script>
+        // Generate floating hearts
+        const heartsBg = document.getElementById('heartsBg');
+        const heartSymbols = ['💗', '💗', '💗', '💗', '💗', '💗', '💗', '💗', '💗', '💗'];
+        const heartCount = 18;
+
+        for (let i = 0; i < heartCount; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.fontSize = (Math.random() * 30 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 12 + 8) + 's';
+            heart.style.animationDelay = (Math.random() * 10) + 's';
+            heartsBg.appendChild(heart);
+        }
+    </script>
+
+</body>
+</html>
